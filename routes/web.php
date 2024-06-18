@@ -70,3 +70,12 @@ Route::get('/test-firebase', function () {
 Route::get('/user',[UserController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
 Route::delete('/users/{user}', [UserController::class, 'destroy']);
+
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN
+|--------------------------------------------------------------------------
+*/
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');

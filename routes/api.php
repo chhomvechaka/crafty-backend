@@ -15,9 +15,9 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 //
 //Route::get('/csrf-token', function() {
 //    return csrf_token();
@@ -43,3 +43,4 @@ Route::delete('/users/{user}', [UserController::class, 'destroy']);
 |--------------------------------------------------------------------------
 */
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
