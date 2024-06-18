@@ -8,28 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
-    protected $table = 'table_role';
+    protected $table = 'table_role';  // Ensure this matches the actual table name in your database
+    protected $primaryKey = 'role_id';  // Set the primary key to the correct column name
+    // If your primary key is not auto-incrementing, you should also disable auto-incrementing in the model:
+    public $incrementing = false;
 
-    // Protected fillable attributes
-    protected $fillable = [
-        'role_name'
-    ];
+    public function users() {
 
-    // Accessors
-    public function getRoleNameAttribute($value)
-    {
-        return ucfirst($value); // Example transformation, makes the first letter uppercase
+        return $this->hasMany(User::class, 'role_id');
     }
 
-    // Relationships
-    public function users()
-    {
-        return $this->hasMany(User::class); // One-to-many relationship
-    }
-
-    // Scopes
-    public function scopeWithUsers($query)
-    {
-        return $query->with('users'); // Eager load users when querying roles
-    }
+//    public function permissions() {
+//        return $this->belongsToMany(Permission::class, 'table_role_permission', 'role_id', 'permission_id');
+//    }
 }

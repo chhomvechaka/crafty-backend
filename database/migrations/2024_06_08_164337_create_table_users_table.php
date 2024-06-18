@@ -15,7 +15,7 @@ class CreateTableUsersTable extends Migration
     {
         Schema::create('table_users', function (Blueprint $table) {
             $table->id('user_id'); // Auto-incrementing primary key
-            $table->string('firebase_uid', 36)->unique(); // Firebase UID, unique and up to 36 characters long
+            $table->string('firebase_uid', 36)->nullable()->unique(); // Firebase UID, unique and up to 36 characters long
             $table->unsignedBigInteger('role_id'); // Foreign key
             $table->string('firstname', 255); // First name
             $table->string('lastname', 255); // Last name

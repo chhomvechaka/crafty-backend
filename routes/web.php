@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Kreait\Firebase\Factory;
-use App\Http\Controllers\AdminAuthController;
-use App\Http\Controllers\ViewUserController;
+use App\Http\Controllers\Api\AdminAuthController;
+use App\Http\Controllers\Api\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,18 +44,29 @@ Route::get('/test-firebase', function () {
     }
 });
 
-//admin route
-Route::get('/login', [AdminAuthController::class, 'login']);
-Route::post('/login', [AdminAuthController::class, 'login']);
-Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
+////admin route
+//Route::get('/login', [AdminAuthController::class, 'login']);
+//Route::post('/login', [AdminAuthController::class, 'login']);
+//Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
+//
+//
+//
+////Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
+////Route::get('/csrf-token', function() {
+////    return csrf_token();
+////});
+//
+//Route::post('/admin/logout', [AdminAuthController::class,'logout']);
+//Route::get('/admin/viewUserDetails/{userId}', [ViewUserController::class, 'viewUserDetails']);
+//Route::get('/admin/getAllUsers', [ViewUserController::class, 'getAllUsers']);
 
 
+/*
+|--------------------------------------------------------------------------
+| USER
+|--------------------------------------------------------------------------
+*/
 
-//Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
-//Route::get('/csrf-token', function() {
-//    return csrf_token();
-//});
-
-Route::post('/admin/logout', [AdminAuthController::class,'logout']);
-Route::get('/admin/viewUserDetails/{userId}', [ViewUserController::class, 'viewUserDetails']);
-Route::get('/admin/getAllUsers', [ViewUserController::class, 'getAllUsers']);
+Route::get('/user',[UserController::class, 'index']);
+Route::post('/users', [UserController::class, 'store']);
+Route::delete('/users/{user}', [UserController::class, 'destroy']);
