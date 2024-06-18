@@ -23,7 +23,7 @@ class AdminAuthController extends Controller
 
             // Check if the logged in user is an admin
             if ($user->isAdmin()) {
-                // Successfully logged in as admin
+                // Successfully logged
                 return response()->json([
                     'message' => 'Logged in successfully as admin.',
                     'user' => $user
