@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// Firebase
 use Kreait\Firebase\Factory;
+use Kreait\Firebase\Exception\FirebaseException;
+// Controllers
 use App\Http\Controllers\Api\AdminAuthController;
 use App\Http\Controllers\Api\UserController;
 
@@ -19,13 +22,12 @@ use App\Http\Controllers\Api\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
+/*
+|--------------------------------------------------------------------------
+| FIREBASE
+|--------------------------------------------------------------------------
+*/
 
-Route::fallback(function () {
-    return response()->json(['error' => 'Not Found'], 404);
-});
-
-
-/*test firebase*/
 Route::get('/test-firebase', function () {
     $factory = (new Factory)->withServiceAccount(base_path(env('FIREBASE_CREDENTIALS')));
     $auth = $factory->createAuth();
@@ -36,11 +38,20 @@ Route::get('/test-firebase', function () {
         foreach ($users as $user) {
             $totalUsers++;
         }
-        dd('Firebase is working! Total users: ' . $totalUsers);
-    } catch (\Kreait\Firebase\Exception\FirebaseException $e) {
-        dd('Firebase SDK exception: ' . $e->getMessage());
+        return response()->json([
+            'message' => 'Firebase is working!',
+            'total_users' => $totalUsers
+        ]);
+    } catch (FirebaseException $e) {
+        return response()->json([
+            'error' => 'Firebase SDK exception',
+            'message' => $e->getMessage()
+        ], 500);
     } catch (\Exception $e) {
-        dd('Firebase error: ' . $e->getMessage());
+        return response()->json([
+            'error' => 'General error',
+            'message' => $e->getMessage()
+        ], 500);
     }
 });
 
