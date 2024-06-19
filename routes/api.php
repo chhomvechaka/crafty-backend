@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AdminAuthController;
 use App\Http\Controllers\Api\UserController;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,17 +17,10 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-//
-//Route::get('/csrf-token', function() {
-//    return csrf_token();
-//});
-//Route::post('/admin/login', [AdminAuthController::class, 'login']);
 
-//Route::post('/login', [AdminAuthController::class, 'login']);
-//Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +38,26 @@ Route::delete('/users/{user}', [UserController::class, 'destroy']);
 |--------------------------------------------------------------------------
 */
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
-Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/admin/user', [AdminAuthController::class, 'user'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->get('/admin/user', [AdminAuthController::class, 'user']);
+
+Route::middleware([
+    'api',
+    EnsureFrontendRequestsAreStateful::class,
+])->group(function () {
+    // Your routes here
+});
+
+//example of using the middleware in the controller
+//use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+//
+//Route::middleware([
+//    'api',
+//    EnsureFrontendRequestsAreStateful::class,
+//])->group(function () {
+//    Route::post('/login', 'AuthController@login');
+//    Route::post('/logout', 'AuthController@logout');
+//    Route::get('/user', 'AuthController@user');
+//    // Add other routes that require stateful authentication here
+//});

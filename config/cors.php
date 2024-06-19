@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'admin/*', '*'], // Adjust the paths as necessary
+    'paths' => ['api/*', 'admin/*', '*', 'sanctum/csrf-cookie'], // Adjust the paths as necessary
     'allowed_methods' => ['*'], // Allows all methods
     'allowed_origins' => ['http://localhost:3000'], // Adjust to match your frontend URL
     'allowed_origins_patterns' => [],

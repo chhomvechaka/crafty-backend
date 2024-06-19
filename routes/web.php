@@ -78,4 +78,19 @@ Route::delete('/users/{user}', [UserController::class, 'destroy']);
 |--------------------------------------------------------------------------
 */
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
-Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/login', function () {
+    return view('welcome');
+});
+
+/*
+|--------------------------------------------------------------------------
+| TOKEN
+|--------------------------------------------------------------------------
+*/
+// routes/web.php
+
+Route::get('/refresh-csrf', function () {
+    return response()->json(['csrf_token' => csrf_token()]);
+});
+
