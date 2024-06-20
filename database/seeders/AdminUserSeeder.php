@@ -20,7 +20,7 @@ class AdminUserSeeder extends Seeder
             'firstname' => 'Admin',
             'lastname' => 'User',
             'firebase_uid' => Str::random(36), // Generate a random string for firebase_uid
-            'role_id' => 1, // Assuming 'admin' role has an ID of 1 in the roles table
+            'role_id' => 3, // Assuming 'admin' role has an ID of 1 in the roles table
             'email' => 'admin@example.com',
             'password' => Hash::make('password'), // Hash a secure password
             'phone_number' => null,

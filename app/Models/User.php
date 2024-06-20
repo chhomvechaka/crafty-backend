@@ -42,4 +42,11 @@ class User extends Authenticatable
         return $this->role->role_name === 'admin';
     }
 
+    public function isSeller() {
+        return $this->role->role_name === 'seller';
+    }
+    public function isBuyer() {
+        return $this->role->role_name === 'buyer';
+    }
+
 }

@@ -79,6 +79,20 @@ use Illuminate\Support\Facades\Log;
 
 class AdminAuthController extends Controller
 {
+    public function index()
+    {
+        // Check if the current user is authenticated as an admin
+        if (Auth::check() && Auth::user()->role_name === 'admin') {
+            // Return a response or view that is specific to admins
+            return response()->json([
+                'message' => 'This is admin',
+                'user' => Auth::user() // Optionally return user data
+            ]);
+        }
+
+        // If the user is not an admin, return an unauthorized error.
+        return response()->json(['message' => 'Unauthorized'], 403);
+    }
     /**
      * Handle an attempt to log in as an admin.
      */
