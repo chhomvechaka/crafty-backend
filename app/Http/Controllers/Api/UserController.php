@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Validator; // Add this line
 
 class UserController extends Controller
 {
-    //
+    /**
+     * Retrieve and display a listing of all users.
+     * Returns a JSON response with all users if found, or a 404 error if no users exist.
+     */
     public function index()
     {
         $users = User::all();
@@ -24,7 +27,11 @@ class UserController extends Controller
             'users' => $users
         ], 200);
     }
-
+    /**
+     * Store a newly created user in the database.
+     * Validates the incoming request data and creates a user if validation passes.
+     * Returns a JSON response with the created user's data or validation errors.
+     */
     public function store(Request $request)
     {
         // Validate request data
@@ -66,7 +73,10 @@ class UserController extends Controller
             'user' => $user
         ], 201);
     }
-
+    /**
+     * Remove the specified user from the database.
+     * Finds the user by ID and deletes them, returning a success message or an error if not found.
+     */
     //delete user
     public function destroy($id)
     {

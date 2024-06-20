@@ -55,21 +55,6 @@ Route::get('/test-firebase', function () {
     }
 });
 
-////admin route
-//Route::get('/login', [AdminAuthController::class, 'login']);
-//Route::post('/login', [AdminAuthController::class, 'login']);
-//Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
-//
-//
-//
-////Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
-////Route::get('/csrf-token', function() {
-////    return csrf_token();
-////});
-//
-//Route::post('/admin/logout', [AdminAuthController::class,'logout']);
-//Route::get('/admin/viewUserDetails/{userId}', [ViewUserController::class, 'viewUserDetails']);
-//Route::get('/admin/getAllUsers', [ViewUserController::class, 'getAllUsers']);
 
 
 /*
@@ -105,3 +90,8 @@ Route::get('/refresh-csrf', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
 
+/*
+|--------------------------------------------------------------------------
+| SELLER
+|--------------------------------------------------------------------------
+*/

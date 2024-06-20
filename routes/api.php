@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AdminAuthController;
 use App\Http\Controllers\Api\UserController;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
-
+use App\Http\Controllers\Api\SellerAuthController;
+use App\Http\Middleware\CheckRole;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -76,22 +77,20 @@ Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->middleware
 Route::get('/admin/user', [AdminAuthController::class, 'user'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->get('/admin/user', [AdminAuthController::class, 'user']);
 
-Route::middleware([
-    'api',
-    EnsureFrontendRequestsAreStateful::class,
-])->group(function () {
-    // Your routes here
-});
+/*
+|--------------------------------------------------------------------------
+| SELLER
+|--------------------------------------------------------------------------
+*/
+// Route to handle store creation
+Route::post('/seller/store', [SellerAuthController::class, 'createStore'])->middleware('auth:sanctum');
+Route::post('/seller/login', [SellerAuthController::class, 'login']);
 
-//example of using the middleware in the controller
-//use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
-//
-//Route::middleware([
-//    'api',
-//    EnsureFrontendRequestsAreStateful::class,
-//])->group(function () {
-//    Route::post('/login', 'AuthController@login');
-//    Route::post('/logout', 'AuthController@logout');
-//    Route::get('/user', 'AuthController@user');
-//    // Add other routes that require stateful authentication here
-//});
+// Route to test DigitalOcean Spaces connectivity
+Route::get('/test-dospaces', [SellerAuthController::class, 'testDigitalOceanSpaces'])->middleware('auth:sanctum');
+
+// Google OAuth
+Route::get('login/google',[SellerAuthController::class,'redirectToGoogle'] );
+Route::get('login/google/callback', [SellerAuthController::class,'handleGoogleCallback']);
+
+
