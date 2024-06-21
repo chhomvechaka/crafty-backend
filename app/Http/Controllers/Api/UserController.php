@@ -69,26 +69,39 @@ class UserController extends Controller
     /**
      * Log out the user from the application.
      */
+//    public function logout(Request $request)
+//    {
+//        if (!Auth::check()) {
+//            return response()->json(['message' => 'No user currently logged in'], 404);
+//        }
+//
+//        $user = Auth::user();
+//        $user->currentAccessToken()->delete();
+//        Log::info('User logged out: ' . $user->email);
+//        return response()->json(['message' => 'Successfully logged out'], 200);
+//    }
     public function logout(Request $request)
     {
-        if (!Auth::check()) {
-            return response()->json(['message' => 'No user currently logged in'], 404);
+        if ($request->user()) {
+            $request->user()->tokens()->delete(); // Revoke all tokens for the user
+            return response()->json(['message' => 'Successfully logged out'], 200);
         }
 
-        $user = Auth::user();
-        $user->currentAccessToken()->delete();
-        Log::info('User logged out: ' . $user->email);
-        return response()->json(['message' => 'Successfully logged out'], 200);
+        return response()->json(['message' => 'No user currently logged in'], 404);
     }
 
     /**
      * Get the current authenticated user's information.
      */
-    public function user()
+    public function user(Request $request)
     {
         $user = Auth::user();
-        return response()->json($user);
+        return response()->json([
+            'user' => $user,
+            'role_id' => $user->role_id, // Ensure role_id is included
+        ]);
     }
+
 
 
     public function index()
