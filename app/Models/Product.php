@@ -21,12 +21,4 @@ class Product extends Model implements HasMedia
         'tag_id',
         'store_id'
     ];
-
-    /**
-     * Define the media collection for product images.
-     */
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('product_images')->useDisk('public');
-    }
 }

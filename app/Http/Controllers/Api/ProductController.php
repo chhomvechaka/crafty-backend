@@ -23,23 +23,24 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'required|string|max:255',
             'product_description' => 'required|string|max:1000',
-            'base_price' => 'required|numeric', // Adjusted to match the field name in the model
-            'stock' => 'required|integer', // Adjusted to match the field name in the model
+            'base_price' => 'required|integer', // Correct field name
+            'stock' => 'required|integer', // Correct validation rule
             'tag_id' => 'nullable|integer',
-            'product_images' => 'nullable|array',
-            'product_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+//            'product_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         try {
             // Check if the user is a seller
             $user = Auth::user();
             if (!$user->isSeller()) {
+
                 return response()->json(['message' => 'Only sellers can create products.'], 403);
             }
 
             // Check if the seller has a store
             $store = Store::where('user_id', Auth::id())->first();
             if (!$store) {
+
                 return response()->json(['message' => 'You must create a store before adding products.'], 400);
             }
 

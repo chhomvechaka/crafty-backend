@@ -79,6 +79,21 @@ class StoreController extends Controller
         }
     }
 
+    public function getAllStore()
+    {
+        try {
+            $stores = Store::all();
+            foreach ($stores as $store) {
+                $store['store_logo_path'] = $store->getMedia('store_logo')->first() ? $store->getMedia('store_logo')->first()->getUrl() : null;
+            }
+
+            return response()->json(['stores' => $stores], 200);
+        } catch (\Exception $e) {
+            Log::error('Error fetching all stores: ' . $e->getMessage());
+            return response()->json(['message' => 'Server error', 'error' => $e->getMessage()], 500);
+        }
+    }
+
     /**
      * Remove the specified store from storage.
      *
