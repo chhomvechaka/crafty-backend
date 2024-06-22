@@ -17,9 +17,18 @@ class CheckRole
      */
     public function handle($request, Closure $next, $role)
     {
-        if (!Auth::check() || Auth::user()->role_name !== $role) {
+        $user = Auth::user();
+
+        if (!$user) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
+
+        $roleCheckMethod = 'is' . ucfirst($role);
+
+        if (!method_exists($user, $roleCheckMethod) || !$user->$roleCheckMethod()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         return $next($request);
     }
 

@@ -5,7 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0|^7.4",
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "kreait/firebase-php": "^5.4",
@@ -14,7 +14,8 @@
         "laravel/sanctum": "^2.15",
         "laravel/socialite": "^5.15",
         "laravel/tinker": "^2.5",
-        "league/flysystem-aws-s3-v3": "^1.0"
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "spatie/laravel-medialibrary": "^8.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

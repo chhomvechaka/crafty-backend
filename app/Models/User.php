@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
+    use InteractsWithMedia;
 
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -38,15 +41,31 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isAdmin() {
-        return $this->role->role_name === 'admin';
+//    public function isAdmin() {
+//        return $this->role->role_name === 'admin';
+//    }
+    public function stores()
+    {
+        return $this->hasMany(Store::class, 'user_id', 'user_id'); // Foreign key on table_stores, primary key on table_users
     }
 
+//    public function isSeller() {
+//        return $this->role->role_name === 'seller';
+//    }
+//    public function isBuyer() {
+//        return $this->role->role_name === 'buyer';
+//    }
+// In User.php (User model)
     public function isSeller() {
-        return $this->role->role_name === 'seller';
+        return $this->role->role_name === 'seller' || $this->role_id === 2;
     }
+
     public function isBuyer() {
-        return $this->role->role_name === 'buyer';
+        return $this->role->role_name === 'buyer' || $this->role_id === 1;
+    }
+
+    public function isAdmin() {
+        return $this->role->role_name === 'admin' || $this->role_id === 3;
     }
 
 }
