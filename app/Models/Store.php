@@ -1,10 +1,14 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Product;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Store extends Model implements HasMedia
 {
     use InteractsWithMedia;
@@ -28,5 +32,10 @@ class Store extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'store_id', 'store_id');
     }
 }

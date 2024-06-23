@@ -43,6 +43,7 @@ Route::middleware(['auth:sanctum', 'check-role:seller'])->group(function () {
     Route::put('/stores/{id}', [StoreController::class, 'update']);
 
     //Product routes (only for sellers)
-    Route::post('/products', [ProductController::class, 'store']);
+    // Route::post('/products', [ProductController::class, 'store']);
+    Route::post('/store/{store}/products', [ProductController::class, 'storeProductsToStore']);
+    Route::get('/store/{store}/products', [ProductController::class, 'getProductsByStore']);
 });
-
