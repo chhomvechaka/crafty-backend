@@ -27,6 +27,7 @@ class ProductController extends Controller
             'stock' => 'required|integer', // Correct validation rule
             'tag_id' => 'nullable|integer',
             'product_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'product_template' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         try {
@@ -57,6 +58,10 @@ class ProductController extends Controller
                 'store_id' => $store->store_id,
             ]);
 
+            if ($request->hasFile('product_template')) {
+                $product->addMedia($request->file('product_template'))->toMediaCollection('product_template');
+            }
+
             if ($request->hasFile('product_images')) {
                 foreach ($request->file('product_images') as $image) {
                     $product->addMedia($image)->toMediaCollection('product_images');
@@ -69,6 +74,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'product' => $product,
+                'template' => $product->getMedia('product_template')->first()->getUrl(),
                 'images' => $productImages,
             ], 201);
         } catch (\Exception $e) {
@@ -98,12 +104,16 @@ class ProductController extends Controller
                     'product_description' => $product->product_description,
                     'base_price' => $product->base_price,
                     'stock' => $product->stock,
+                    'template' => $product->getMedia('product_template')->first() ? $product->getMedia('product_template')->first()->getUrl() : "",
                     'images' => $images, // Include images in the product details
                 ];
             });
 
             // Return the response with products and their images
-            return response()->json(['products' => $products], 200);
+            return response()->json([
+                'store' => $store,
+                'products' => $products
+            ], 200);
         } catch (\Exception $e) {
             Log::error('Error fetching products by store: ' . $e->getMessage());
             return response()->json(['message' => 'Server error', 'error' => $e->getMessage()], 500);
