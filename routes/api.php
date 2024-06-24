@@ -17,6 +17,7 @@ Route::post('/login', [UserController::class, 'login']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
     Route::get('/user', [UserController::class, 'user']);
+    Route::get('/stores', [StoreController::class, 'index']);
 });
 
 // Admin routes
@@ -38,7 +39,6 @@ Route::get('/stores/all', [StoreController::class, 'getAllStore']);
 Route::middleware(['auth:sanctum', 'check-role:seller'])->group(function () {
     //Store routes (only for sellers)
     Route::post('/stores', [StoreController::class, 'store']);
-    Route::get('/stores', [StoreController::class, 'index']);
     Route::delete('/stores/{id}', [StoreController::class, 'destroy']);
     Route::put('/stores/{id}', [StoreController::class, 'update']);
 
