@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -67,7 +68,8 @@ class StoreController extends Controller
     public function index()
     {
         try {
-            $stores = Store::where('user_id', Auth::id())->get();
+            $stores = Store::all();
+            // $stores = Store::where('user_id', Auth::id())->get();
             foreach ($stores as $store) {
                 $store['store_logo_path'] = $store->getMedia('store_logo')->first() ? $store->getMedia('store_logo')->first()->getUrl() : null;
             }
