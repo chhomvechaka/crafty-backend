@@ -35,9 +35,11 @@ Route::middleware(['auth:sanctum', 'check-role:seller'])->group(function () {
 });
 
 // Store routes (only for sellers)
-Route::get('/stores/all', [StoreController::class, 'getAllStore']);
+
+//Route::get('/stores/all', [StoreController::class, 'getAllStore']);
 Route::middleware(['auth:sanctum', 'check-role:seller'])->group(function () {
     //Store routes (only for sellers)
+    Route::get('/my-store', [StoreController::class, 'getStoresByUserId']);
     Route::post('/stores', [StoreController::class, 'store']);
     Route::delete('/stores/{id}', [StoreController::class, 'destroy']);
     Route::put('/stores/{id}', [StoreController::class, 'update']);

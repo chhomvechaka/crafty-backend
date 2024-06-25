@@ -81,6 +81,28 @@ class StoreController extends Controller
         }
     }
 
+    /**
+     * Display a listing of the stores by user ID.
+     *
+     * @param  int  $userId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getStoresByUserId()
+    {
+        $userId = Auth::id(); // Get the current authenticated user's ID
+        $store = Store::where('user_id', $userId)->first(); // Assuming each user has only one store
+
+        if (!$store) {
+            return response()->json(['message' => 'No store found'], 404);
+        }
+
+        $store['store_logo_path'] = $store->getMedia('store_logo')->first() ? $store->getMedia('store_logo')->first()->getUrl() : 'default_path';
+
+        return response()->json(['store' => $store], 200);
+    }
+
+
+
     public function getAllStore()
     {
         try {
