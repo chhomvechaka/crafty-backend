@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AdminAuthController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\SellerAuthController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\AdminAuthController;
+use App\Http\Controllers\Api\SellerAuthController;
+use App\Http\Controllers\QuotationRequestController;
+use App\Http\Controllers\Api\ProductOptionController;
 
 // Public routes
 Route::get('/all-user', [UserController::class, 'index']);
@@ -20,6 +22,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/stores', [StoreController::class, 'index']);
     Route::get('/stores/{store}', [StoreController::class, 'show']); // Get a specific store by ID
     Route::get('/products/{id}', [ProductController::class, 'getProductById']);
+    Route::post('/save-design', [ProductOptionController::class, 'saveDesign']);
+    Route::get('/saved-designs', [ProductOptionController::class, 'getSavedDesigns']);
+    Route::post('/request-design', [QuotationRequestController::class, 'requestDesign']);
+    Route::get('/seller-requests', [QuotationRequestController::class, 'getSellerRequests']);
 });
 
 // Admin routes

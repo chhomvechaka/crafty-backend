@@ -21,4 +21,9 @@ class Product extends Model implements HasMedia
         'tag_id',
         'store_id'
     ];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
 }

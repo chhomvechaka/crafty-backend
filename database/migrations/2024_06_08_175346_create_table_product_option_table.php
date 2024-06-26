@@ -14,9 +14,13 @@ class CreateTableProductOptionTable extends Migration
     public function up()
     {
         Schema::create('table_product_option', function (Blueprint $table) {
-            $table->jsonb('design_element')->unique();
+            $table->id('product_option_id');
+            $table->boolean('is_requested')->default(false);
+            $table->jsonb('design_element');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('product_id')->on('table_product')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('user_id')->on('table_users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,5 +36,6 @@ class CreateTableProductOptionTable extends Migration
             // Drop the foreign key constraints first
             $table->dropForeign(['product_id']);
         });
-        Schema::dropIfExists('table_product_option');    }
+        Schema::dropIfExists('table_product_option');
+    }
 }
