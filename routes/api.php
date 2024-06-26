@@ -18,6 +18,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
     Route::get('/user', [UserController::class, 'user']);
     Route::get('/stores', [StoreController::class, 'index']);
+    Route::get('/stores/{store}', [StoreController::class, 'show']); // Get a specific store by ID
+    Route::get('/products/{id}', [ProductController::class, 'getProductById']);
 });
 
 // Admin routes

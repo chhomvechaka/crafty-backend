@@ -119,4 +119,29 @@ class ProductController extends Controller
             return response()->json(['message' => 'Server error', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function getProductById($id)
+    {
+        try {
+            $product = Product::findOrFail($id);
+
+            // Get product template image
+            $productTemplate = $product->getMedia('product_template')->first() ? $product->getMedia('product_template')->first()->getUrl() : null;
+
+            // Get product images
+            $productImages = $product->getMedia('product_images')->map(function ($media) {
+                return $media->getUrl();
+            })->toArray();
+
+            return response()->json([
+                'product' => $product,
+                'template' => $productTemplate,
+                'images' => $productImages,
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Error fetching product: ' . $e->getMessage());
+            return response()->json(['message' => 'Error fetching product', 'error' => $e->getMessage()], 500);
+        }
+    }
+
 }

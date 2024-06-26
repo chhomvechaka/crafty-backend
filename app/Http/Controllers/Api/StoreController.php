@@ -102,7 +102,6 @@ class StoreController extends Controller
     }
 
 
-
     public function getAllStore()
     {
         try {
@@ -182,6 +181,20 @@ class StoreController extends Controller
         } catch (\Exception $e) {
             Log::error('Error updating store: ' . $e->getMessage());
             return response()->json(['message' => 'Server error', 'error' => $e->getMessage()], 500);
+        }
+    }
+    // Fetch a single store by ID
+    public function show(Store $store)
+    {
+        try {
+            $products = $store->products;
+            $store['store_logo_path'] = $store->getMedia('store_logo')->first() ? $store->getMedia('store_logo')->first()->getUrl() : 'default_path';
+            return response()->json([
+                'store' => $store,
+                'products' => $products,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error fetching store details', 'error' => $e->getMessage()], 500);
         }
     }
 }
