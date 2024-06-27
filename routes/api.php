@@ -26,6 +26,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/saved-designs', [ProductOptionController::class, 'getSavedDesigns']);
     Route::post('/request-design', [QuotationRequestController::class, 'requestDesign']);
     Route::get('/seller-requests', [QuotationRequestController::class, 'getSellerRequests']);
+    Route::get('/store/{store}/products', [ProductController::class, 'getProductsByStore']);
+
 });
 
 // Admin routes
@@ -55,5 +57,4 @@ Route::middleware(['auth:sanctum', 'check-role:seller'])->group(function () {
     //Product routes (only for sellers)
     // Route::post('/products', [ProductController::class, 'store']);
     Route::post('/store/{store}/products', [ProductController::class, 'storeProductsToStore']);
-    Route::get('/store/{store}/products', [ProductController::class, 'getProductsByStore']);
 });
