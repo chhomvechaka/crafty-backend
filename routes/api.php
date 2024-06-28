@@ -27,8 +27,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/request-design', [QuotationRequestController::class, 'requestDesign']);
     Route::get('/seller-requests', [QuotationRequestController::class, 'getSellerRequests']);
     Route::get('/store/{store}/products', [ProductController::class, 'getProductsByStore']);
-
 });
+
 
 // Admin routes
 Route::post('/admin/login', [AdminAuthController::class, 'login']);

@@ -4,9 +4,6 @@ use Illuminate\Support\Facades\Route;
 // Firebase
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Exception\FirebaseException;
-// Controllers
-use App\Http\Controllers\Api\AdminAuthController;
-use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,27 +54,7 @@ Route::get('/', function () {
 
 
 
-/*
-|--------------------------------------------------------------------------
-| USER
-|--------------------------------------------------------------------------
-*/
 
-Route::get('/user',[UserController::class, 'index']);
-Route::post('/users', [UserController::class, 'store']);
-Route::delete('/users/{user}', [UserController::class, 'destroy']);
-
-
-/*
-|--------------------------------------------------------------------------
-| ADMIN
-|--------------------------------------------------------------------------
-*/
-Route::post('/admin/login', [AdminAuthController::class, 'login']);
-Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::get('/login', function () {
-    return view('welcome');
-});
 
 /*
 |--------------------------------------------------------------------------
