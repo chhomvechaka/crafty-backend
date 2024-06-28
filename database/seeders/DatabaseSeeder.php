@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
             RolesTableSeeder::class,
             AdminUserSeeder::class,
             TagTableSeeder::class,
-            // Add other seeders here
-
+            UserSeeder::class,
+            StoreSeeder::class,
         ]);
     }
 }
