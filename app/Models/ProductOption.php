@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class ProductOption extends Model
+class ProductOption extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $table = 'table_product_option';
     protected $primaryKey = 'product_option_id';
@@ -15,7 +17,6 @@ class ProductOption extends Model
         'design_element',
         'product_id',
         'user_id',
-        'product_option_id',
         'is_requested'
     ];
 

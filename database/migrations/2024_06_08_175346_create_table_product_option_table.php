@@ -35,6 +35,7 @@ class CreateTableProductOptionTable extends Migration
         Schema::table('table_product_option', function (Blueprint $table) {
             // Drop the foreign key constraints first
             $table->dropForeign(['product_id']);
+            $table->dropForeign(['user_id']);
         });
         Schema::dropIfExists('table_product_option');
     }
