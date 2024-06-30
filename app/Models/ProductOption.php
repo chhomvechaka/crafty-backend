@@ -17,6 +17,7 @@ class ProductOption extends Model implements HasMedia
         'design_element',
         'product_id',
         'user_id',
+        'product_option_id',
         'is_requested'
     ];
 
